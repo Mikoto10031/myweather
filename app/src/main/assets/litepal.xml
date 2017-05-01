@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <dbname value="my_weather" />
+    <version value="1" />
+    <list>
+        <mapping class="com.myweather.android.db.Province" />
+        <mapping class="com.myweather.android.db.City" />
+        <mapping class="com.myweather.android.db.County" />
+    </list>
+</litepal>
