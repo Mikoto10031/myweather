@@ -4,7 +4,7 @@ import org.litepal.crud.DataSupport;
 
 /**
  * 项目名称：MyWeather
- * 类描述：
+ * 类描述：数据库的城市表
  * 创建人：liang
  * 创建时间：2017/5/1 0001 10:28
  * 修改人：liang
