@@ -134,7 +134,7 @@ public class ChooseAreaFragment extends Fragment {
         queryProvince();
     }
     /**
-     * 查询省份，本地数据库查询和api查询
+     * 查询省份，本地数据库查询→api查询
      */
     private void queryProvince(){
         titleText.setText("中国");
@@ -145,6 +145,9 @@ public class ChooseAreaFragment extends Fragment {
             for(Province province:provinceList){
                 datalist.add(province.getProvinceName());
             }
+            /**
+             * 更新适配器，显示查询的内容
+             */
             adapter.notifyDataSetChanged();
             listView.setSelection(0);
             currentLevel=LEVEL_PROVINCE;
@@ -155,7 +158,7 @@ public class ChooseAreaFragment extends Fragment {
         }
     }
     /**
-     * 查询城市，本地数据库查询和api查询
+     * 查询城市，本地数据库查询→api查询
      */
     private void queryCities(){
         titleText.setText(selectedProvince.getProvinceName());
@@ -177,7 +180,7 @@ public class ChooseAreaFragment extends Fragment {
         }
     }
     /**
-     * 查询县/区，本地数据库查询和api查询
+     * 查询县/区，本地数据库查询→api查询
      */
     private void queryCounties(){
         titleText.setText(selectedCity.getCityName());
