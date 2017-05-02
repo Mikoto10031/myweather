@@ -2,9 +2,11 @@ package com.myweather.android.util;
 
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
 import com.myweather.android.db.City;
 import com.myweather.android.db.County;
 import com.myweather.android.db.Province;
+import com.myweather.android.gson.Weather;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -12,7 +14,7 @@ import org.json.JSONObject;
 
 /**
  * 项目名称：MyWeather
- * 类描述：解析JSON数据并保存到db
+ * 类描述：解析JSON数据(省市县、天气),并保存省市县数据到db
  * 创建人：liang
  * 创建时间：2017/5/1 0001 11:39
  * 修改人：liang
@@ -84,5 +86,21 @@ public class Utility {
             }
         }
         return false;
+    }
+    /**
+     * 用GSON解析JSON天气数据，以Weather类的形式返回
+     */
+    public static Weather handleWeatherResponse(String response){
+        try{
+            JSONObject jsonObject=new JSONObject(response);
+            JSONArray jsonArray=jsonObject.getJSONArray("HeWeather5");
+            String weatherContent=jsonArray.getJSONObject(0).toString();
+            Weather weather=new Weather();
+            weather=new Gson().fromJson(weatherContent,Weather.class);
+            return weather;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }

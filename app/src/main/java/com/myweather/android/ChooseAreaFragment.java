@@ -32,7 +32,7 @@ import okhttp3.Response;
 
 /**
  * 项目名称：MyWeather
- * 类描述：
+ * 类描述：加载省市县列表，先从本地加载然后从服务器加载
  * 创建人：liang
  * 创建时间：2017/5/1 0001 14:02
  * 修改人：liang
@@ -82,7 +82,7 @@ public class ChooseAreaFragment extends Fragment {
 
 
     /**
-     * 位ListView设置适配器
+     * 为ListView设置适配器
      */
     @Override
     public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
