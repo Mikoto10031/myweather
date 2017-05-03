@@ -1,6 +1,7 @@
 package com.myweather.android;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -111,6 +112,16 @@ public class ChooseAreaFragment extends Fragment {
                 else if(currentLevel==LEVEL_CITY){
                     selectedCity=cityList.get(i);
                     queryCounties();
+                }
+                /**
+                 * 点击到了县/区级，此时就要开始关闭当前界面，显示天气
+                 */
+                else if(currentLevel==LEVEL_COUNTY){
+                    String weatherId=countyList.get(i).getWeatherId();
+                    Intent intent=new Intent(getActivity(),WeatherAcitivity.class);
+                    intent.putExtra("weatherId",weatherId);
+                    startActivity(intent);
+                    getActivity().finish();
                 }
             }
         });
