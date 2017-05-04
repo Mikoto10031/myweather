@@ -22,6 +22,8 @@ public class Forecast {
         public String min;
     }
     public class More{
+        @SerializedName("code_d")
+        public String imageCode;
         @SerializedName("txt_d")
         public String info;
     }

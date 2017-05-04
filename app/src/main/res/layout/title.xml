@@ -3,12 +3,19 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize">
 
+    <Button
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:id="@+id/choose_county"
+        android:background="@drawable/choose_couty"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_alignParentLeft="true"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/title_city"
         android:layout_centerInParent="true"
-        android:textColor="#fff"
         android:textSize="20sp"/>
     <TextView
         android:layout_width="wrap_content"
@@ -16,6 +23,6 @@
         android:id="@+id/title_updatetime"
         android:layout_marginRight="10dp"
         android:layout_centerVertical="true"
-        android:textColor="#fff"
-        android:textSize="16sp"/>
+        android:textSize="16sp"
+        android:layout_alignParentRight="true"/>
 </RelativeLayout>
