@@ -12,7 +12,8 @@ package com.myweather.android.gson;
 public class AQI {
     public AQICity city;
     public class AQICity{
-        public String aqi;
-        public String pm25;
+        public String aqi;//空气质量指数
+        public String pm25;//pm2.5
+        public String qlty;//空气等级
     }
 }

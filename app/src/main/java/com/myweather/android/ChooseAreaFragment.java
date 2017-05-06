@@ -140,7 +140,7 @@ public class ChooseAreaFragment extends Fragment {
             }
         });
         /**
-         * 返回时，显示上一层的数据
+         * 点击返回按钮时，显示上一层的数据
          */
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,6 +158,38 @@ public class ChooseAreaFragment extends Fragment {
          */
         queryProvince();
     }
+    /**
+     * 点击手机的返回键时，也要实现返回按钮的功能(功能未完善)
+     */
+ /*   @Override
+    public void onResume() {
+        super.onResume();
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
+                        if(currentLevel==LEVEL_COUNTY && getActivity() instanceof WeatherAcitivity){
+                            queryCities();
+                            return true;
+                        }else if(currentLevel==LEVEL_CITY && getActivity() instanceof WeatherAcitivity){
+                            queryProvince();
+                            return true;
+                        }else if(currentLevel==LEVEL_PROVINCE && getActivity() instanceof WeatherAcitivity){
+                           *//* ChooseAreaFragment fragment=(ChooseAreaFragment) getFragmentManager().findFragmentById(R.id.choose_area_fragment);
+                            FragmentManager fragmentManager=getFragmentManager();
+                            FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+                            fragmentTransaction.remove(fragment);
+                            fragmentTransaction.commit();*//*
+
+                            return true;
+                        }
+                    }
+                return false;
+            }
+        });
+    }*/
     /**
      * 查询省份，本地数据库查询→api查询
      */
@@ -182,6 +214,7 @@ public class ChooseAreaFragment extends Fragment {
             queryFromApi(address,"province");
         }
     }
+
     /**
      * 查询城市，本地数据库查询→api查询
      */

@@ -16,6 +16,7 @@ public class SuggetionAll extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent=getIntent();
+        String briefinfo=intent.getStringExtra("briefinfo");
         String info=intent.getStringExtra("info");
         String infoTitle=intent.getStringExtra("title");
         Log.d("Main",info);
@@ -32,8 +33,10 @@ public class SuggetionAll extends AppCompatActivity {
         setContentView(R.layout.suggetion_all);
         TextView textViewTitle=(TextView) findViewById(R.id.suggestion_all_title);
         textViewTitle.setText(infoTitle);
-        TextView textViewContent=(TextView) findViewById(R.id.suggestionInfoAll);
-        textViewContent.setText(info);
+        TextView textViewInfo=(TextView) findViewById(R.id.suggestionInfo);
+        textViewInfo.setText(info);
+        TextView textViewBrief=(TextView) findViewById(R.id.suggestionInfoBrief);
+        textViewBrief.setText(briefinfo);
         Button back=(Button) findViewById(R.id.suggestion_all_back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override

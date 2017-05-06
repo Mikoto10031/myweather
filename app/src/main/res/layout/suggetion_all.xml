@@ -10,6 +10,7 @@
     android:paddingTop="0dp"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
+    android:background="#0099ff"
     tools:context="com.myweather.android.SuggetionAll">
     <include layout="@layout/suggestionalltitle"/>
     <FrameLayout
@@ -30,8 +31,17 @@
             android:background="#00000000">
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:id="@+id/suggestionInfoAll"
+                android:layout_height="wrap_content"
+                android:id="@+id/suggestionInfoBrief"
+                android:background="#80FFFFFF"
+                android:textColor="#FF4040"
+                android:textSize="24sp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:id="@+id/suggestionInfo"
                 android:background="#80FFFFFF"
                 android:textColor="#000000"
                 android:textSize="18sp"
