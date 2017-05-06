@@ -18,7 +18,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".WeatherAcitivity"></activity>
+        <activity android:name=".WeatherAcitivity" />
+        <activity
+            android:name=".SuggetionAll"
+            android:label="@string/title_activity_suggetion_all"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

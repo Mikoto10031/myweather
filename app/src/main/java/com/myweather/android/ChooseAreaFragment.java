@@ -119,7 +119,7 @@ public class ChooseAreaFragment extends Fragment {
                 else if(currentLevel==LEVEL_COUNTY){
                     String weatherId=countyList.get(i).getWeatherId();
                     /**
-                     * 当前界面在MainActivity,那么就跳转显示天气界面
+                     * 判断当前界面在MainActivity,那么就跳转显示天气界面
                      */
                     if(getActivity() instanceof MainActivity){
                         Intent intent=new Intent(getActivity(),WeatherAcitivity.class);
@@ -128,7 +128,7 @@ public class ChooseAreaFragment extends Fragment {
                         getActivity().finish();
                     }
                     /**
-                     * 当前界面界面在WeathereActivity，那么不用跳转，关闭侧拉菜单
+                     * 判断当前界面界面在WeathereActivity，那么不用跳转，关闭侧拉菜单,刷新天气数据
                      */
                     else if(getActivity() instanceof WeatherAcitivity){
                         WeatherAcitivity acitivity=(WeatherAcitivity) getActivity();

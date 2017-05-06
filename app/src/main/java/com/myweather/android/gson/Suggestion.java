@@ -18,15 +18,45 @@ public class Suggestion {
     public CarWash carWash;
     @SerializedName("sport")
     public Sport sport;
+    @SerializedName("drsg")
+    public Clothes clothes;
+    @SerializedName("flu")
+    public Fluence fluence;
+    @SerializedName("uv")
+    public Layer layer;
     public class Comfort{
+        @SerializedName("brf")
+        public String briefInfo;
         @SerializedName("txt")
         public String info;
     }
     public class CarWash{
+        @SerializedName("brf")
+        public String briefInfo;
         @SerializedName("txt")
         public String info;
     }
     public class Sport{
+        @SerializedName("brf")
+        public String briefInfo;
+        @SerializedName("txt")
+        public String info;
+    }
+    public class Clothes{
+        @SerializedName("brf")
+        public String briefInfo;
+        @SerializedName("txt")
+        public String info;
+    }
+    public class Fluence{
+        @SerializedName("brf")
+        public String briefInfo;
+        @SerializedName("txt")
+        public String info;
+    }
+    public class Layer{
+        @SerializedName("brf")
+        public String briefInfo;
         @SerializedName("txt")
         public String info;
     }

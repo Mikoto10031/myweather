@@ -4,7 +4,7 @@
     android:id="@+id/activity_weather"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#00FFFFFF"
+    android:background="#FFFFFF"
     tools:context="com.myweather.android.WeatherAcitivity">
 
     <android.support.v4.widget.DrawerLayout

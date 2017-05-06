@@ -1,5 +1,6 @@
 package com.myweather.android;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -9,6 +10,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -41,8 +43,11 @@ import static com.myweather.android.DateToWeek.VeDate.getWeekStr;
  * 修改时间：2017/5/3 0001 22:01
  * 修改备注：
  */
-public class WeatherAcitivity extends AppCompatActivity {
+public class WeatherAcitivity extends AppCompatActivity implements View.OnClickListener{
 
+    private String Key="fc99c25bcb6b448cab14ce39790e84b0";
+    private String OtherKey="bc0418b57b2d4918819d3974ac1285d9";
+    private Weather infoweather;
     public DrawerLayout drawerLayout;
     public Button choose_county;
     public SwipeRefreshLayout swipeRefreshLayout;
@@ -54,9 +59,12 @@ public class WeatherAcitivity extends AppCompatActivity {
     private LinearLayout forecastLayout;
     private TextView aqi;
     private TextView pm25;
-    private TextView suggestionComfort;
-    private TextView suggestionCarWash;
-    private TextView suggestionSport;
+    private Button suggestionComfort;
+    private Button suggestionCarWash;
+    private Button suggestionSport;
+    private Button suggestionLayer;
+    private Button suggestionFlu;
+    private Button suggestionClothes;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,9 +95,12 @@ public class WeatherAcitivity extends AppCompatActivity {
         forecastLayout=(LinearLayout) findViewById(R.id.forecast_layout);
         aqi=(TextView) findViewById(R.id.aqi);
         pm25=(TextView) findViewById(R.id.pm25);
-        suggestionComfort=(TextView) findViewById(R.id.suggestion_comfort);
-        suggestionCarWash=(TextView) findViewById(R.id.suggestion_car_wash);
-        suggestionSport=(TextView) findViewById(R.id.suggestion_sport);
+        suggestionComfort=(Button) findViewById(R.id.suggestion_comfort);
+        suggestionCarWash=(Button) findViewById(R.id.suggestion_car_wash);
+        suggestionSport=(Button) findViewById(R.id.suggestion_sport);
+        suggestionLayer=(Button) findViewById(R.id.layer);
+        suggestionFlu=(Button) findViewById(R.id.flu);
+        suggestionClothes=(Button) findViewById(R.id.clothes);
         /**
          * 用shredPreferences存储查询天气返回的JSON，优先查询本地JSON，然后才请求天气数据
          */
@@ -101,6 +112,7 @@ public class WeatherAcitivity extends AppCompatActivity {
         final String weatherId;
         if(weatherJsonString!=null){
             Weather weather= Utility.handleWeatherResponse(weatherJsonString);
+            infoweather=weather;
             weatherId=weather.basic.weatherId;
             /**
              * 初始化各个控件
@@ -133,12 +145,88 @@ public class WeatherAcitivity extends AppCompatActivity {
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
+        /**
+         * 生活建议的具体内容
+         */
+        suggestionComfort.setOnClickListener(this);
+        suggestionCarWash.setOnClickListener(this);
+        suggestionSport.setOnClickListener(this);
+        suggestionLayer.setOnClickListener(this);
+        suggestionFlu.setOnClickListener(this);
+        suggestionClothes.setOnClickListener(this);
     }
+
+    /**
+     * 显示具体内容，又出Bug了，FA♂Q
+     */
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.suggestion_comfort: {
+                String info = "\n"+infoweather.suggestion.comfort.briefInfo+"\n\n" + infoweather.suggestion.comfort.info;
+                String title="舒适指数";
+                Intent intent=new Intent(WeatherAcitivity.this,SuggetionAll.class);
+                intent.putExtra("info",info);
+                intent.putExtra("title",title);
+                startActivity(intent);
+            }
+            break;
+            case R.id.suggestion_car_wash: {
+                String info = "\n"+infoweather.suggestion.carWash.briefInfo+"\n\n" + infoweather.suggestion.carWash.info;
+                String title="洗车指数";
+                Intent intent=new Intent(WeatherAcitivity.this,SuggetionAll.class);
+                intent.putExtra("info",info);
+                intent.putExtra("title",title);
+                Log.d("Main",info);
+                startActivity(intent);
+            }
+            break;
+            case R.id.suggestion_sport: {
+                String info = "\n"+infoweather.suggestion.sport.briefInfo+"\n\n" + infoweather.suggestion.sport.info;
+                String title="运动指数";
+                Intent intent=new Intent(WeatherAcitivity.this,SuggetionAll.class);
+                intent.putExtra("info",info);
+                intent.putExtra("title",title);
+                startActivity(intent);
+            }
+            break;
+            case R.id.layer: {
+                String info = "\n"+infoweather.suggestion.layer.briefInfo+"\n\n" + infoweather.suggestion.layer.info;
+                String title="紫外线指数";
+                Intent intent=new Intent(WeatherAcitivity.this,SuggetionAll.class);
+                intent.putExtra("info",info);
+                intent.putExtra("title",title);
+                startActivity(intent);
+            }
+            break;
+            case R.id.flu: {
+                String info = "\n"+infoweather.suggestion.fluence.briefInfo+"\n\n" + infoweather.suggestion.fluence.info;
+                String title="感冒指数";
+                Intent intent=new Intent(WeatherAcitivity.this,SuggetionAll.class);
+                intent.putExtra("info",info);
+                intent.putExtra("title",title);
+                startActivity(intent);
+            }
+            break;
+            case R.id.clothes: {
+                String info = "\n"+infoweather.suggestion.clothes.briefInfo+"\n\n" + infoweather.suggestion.clothes.info;
+                String title="穿衣指数";
+                Intent intent=new Intent(WeatherAcitivity.this,SuggetionAll.class);
+                intent.putExtra("info",info);
+                intent.putExtra("title",title);
+                startActivity(intent);
+            }
+            break;
+            default:
+                break;
+        }
+    }
+
     /**
      * 网上查询天气数据存到本地并加载天气数据
      */
     public void requestWeatherFromApi(String weatherId){
-        String ApiUrl="https://free-api.heweather.com/v5/weather?city="+weatherId+"&key=bc0418b57b2d4918819d3974ac1285d9";
+        String ApiUrl="https://free-api.heweather.com/v5/weather?city="+weatherId+"&key="+Key;
         HttpUtil.sendOkHttpRequest(ApiUrl, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -155,6 +243,7 @@ public class WeatherAcitivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 final String responseData=response.body().string();
                 final Weather weather=Utility.handleWeatherResponse(responseData);
+                infoweather=weather;
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -179,7 +268,7 @@ public class WeatherAcitivity extends AppCompatActivity {
     public void showWeather(Weather weather){
         String cityName=weather.basic.cityName;
         String updateTime=weather.basic.update.updateTime.split(" ")[1];
-        String degree=weather.now.temperature+"℃";
+        String degree="  "+weather.now.temperature+"°";
         String weatherinfo=weather.now.more.info;
         titleCity.setText(cityName);
         titleUpdateTime.setText("更新于 "+updateTime);
@@ -220,12 +309,21 @@ public class WeatherAcitivity extends AppCompatActivity {
             aqi.setText(weather.aqi.city.aqi);
             pm25.setText(weather.aqi.city.pm25);
         }
-        String suggestion_comfort="舒适指数："+weather.suggestion.comfort.info;
-        String suggestion_carWash="洗车指数："+weather.suggestion.carWash.info;
-        String suggestion_sport="运动指数："+weather.suggestion.sport.info;
+        String suggestion_comfort="舒适指数\n"+weather.suggestion.comfort.briefInfo;
+        String suggestion_carWash="洗车指数\n"+weather.suggestion.carWash.briefInfo;
+        String suggestion_sport="运动指数\n"+weather.suggestion.sport.briefInfo;
+        String suggestion_layer="紫外指数\n"+weather.suggestion.layer.briefInfo;
+        String suggestion_flu="感冒指数\n"+weather.suggestion.fluence.briefInfo;
+        String suggestion_clothes="穿衣指数\n"+weather.suggestion.clothes.briefInfo;
         suggestionComfort.setText(suggestion_comfort);
         suggestionCarWash.setText(suggestion_carWash);
         suggestionSport.setText(suggestion_sport);
+        suggestionLayer.setText(suggestion_layer);
+        suggestionFlu.setText(suggestion_flu);
+        suggestionClothes.setText(suggestion_clothes);
         weatherLayout.setVisibility(View.VISIBLE);
+        /**
+         * 计划功能：显示了天气后启动后台服务，隔一段时间更新一次天气
+         */
     }
 }

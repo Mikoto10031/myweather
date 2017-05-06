@@ -3,8 +3,12 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="15dp"
-    android:background="#00000000">
+    android:background="#FFFFFF">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#B0B0B0"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -13,19 +17,70 @@
         android:text="生活建议"
         android:textColor="#000000"
         android:textSize="20sp"/>
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/suggestion_comfort"
-        android:layout_margin="15dp"/>
-    <TextView
-        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:id="@+id/suggestion_comfort"
+            android:layout_margin="5dp"
+            android:drawableTop="@drawable/comfort"
+            android:background="#FFFFFF"
+            android:textColor="#000000"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:id="@+id/suggestion_car_wash"
+            android:layout_margin="5dp"
+            android:drawableTop="@drawable/washcar"
+            android:background="#FFFFFF"
+            android:textColor="#000000"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:id="@+id/suggestion_sport"
+            android:layout_margin="5dp"
+            android:drawableTop="@drawable/sport"
+            android:background="#FFFFFF"
+            android:textColor="#000000"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/suggestion_car_wash"
-        android:layout_margin="15dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/suggestion_sport"
-        android:layout_margin="15dp"/>
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:id="@+id/layer"
+            android:layout_margin="5dp"
+            android:drawableTop="@drawable/layer"
+            android:background="#FFFFFF"
+            android:textColor="#000000"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:id="@+id/flu"
+            android:layout_margin="5dp"
+            android:drawableTop="@drawable/flu"
+            android:background="#FFFFFF"
+            android:textColor="#000000"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:id="@+id/clothes"
+            android:layout_margin="5dp"
+            android:drawableTop="@drawable/clothes"
+            android:background="#FFFFFF"
+            android:textColor="#000000"/>
+    </LinearLayout>
 </LinearLayout>
