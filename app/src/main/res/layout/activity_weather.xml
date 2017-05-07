@@ -4,9 +4,14 @@
     android:id="@+id/activity_weather"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="#80FFFFFF"
     tools:context="com.myweather.android.WeatherAcitivity">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/activity_weather_bg"
+        android:scaleType="centerCrop"/>
     <android.support.v4.widget.DrawerLayout
         android:layout_height="match_parent"
         android:layout_width="match_parent"
@@ -20,7 +25,8 @@
                 android:layout_height="match_parent"
                 android:id="@+id/weather_layout"
                 android:scrollbars="none"
-                android:overScrollMode="never">
+                android:overScrollMode="never"
+                android:background="#6FFFFFFF">
 
                 <LinearLayout
                     android:layout_width="match_parent"

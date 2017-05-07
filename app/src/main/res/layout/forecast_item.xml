@@ -23,6 +23,7 @@
         android:layout_weight="1"
         android:layout_gravity="center_vertical"
         android:gravity="left"
+        android:textColor="#000000"
         android:id="@+id/forecast_info"/>
     <TextView
         android:layout_width="0dp"

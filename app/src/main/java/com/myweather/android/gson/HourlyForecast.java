@@ -12,8 +12,6 @@ import com.google.gson.annotations.SerializedName;
  * 修改备注：
  */
 public class HourlyForecast {
-    @SerializedName("hum")
-    public String RelativeHumidity;
     @SerializedName("pop")
     public String RainfallProbability;
 }

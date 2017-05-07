@@ -250,7 +250,7 @@ public class WeatherAcitivity extends AppCompatActivity implements View.OnClickL
         /**
          * api接口
          */
-        String ApiUrl="https://free-api.heweather.com/v5/weather?city="+weatherId+"&key="+Key;
+        String ApiUrl="https://free-api.heweather.com/v5/weather?city="+weatherId+"&key="+OtherKey;
         HttpUtil.sendOkHttpRequest(ApiUrl, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -339,13 +339,27 @@ public class WeatherAcitivity extends AppCompatActivity implements View.OnClickL
             pm25.setText(weather.aqi.city.pm25);
             qlty.setText(weather.aqi.city.qlty);
         }
+        /**
+         * 由于小时预报服务在接近零点时不提供了，此时hourly_forecast没有元素
+         */
         if(weather.hourly_forecast!=null){
-            HourlyForecast hourlyForecast=weather.hourly_forecast.get(0);
-            pop.setText(hourlyForecast.RainfallProbability);
-            hum.setText(hourlyForecast.RelativeHumidity);
+            if(!weather.hourly_forecast.isEmpty()){
+                HourlyForecast hourlyForecast=weather.hourly_forecast.get(0);
+                pop.setText(hourlyForecast.RainfallProbability+"%");
+            }
+            else {
+                pop.setText("未知");
+            }
+        }else {
+            pop.setText("未知");
         }
         if(weather.now!=null){
-            fl.setText(weather.now.sensibleTemp);
+            fl.setText(weather.now.sensibleTemp+"℃");
+            hum.setText(weather.now.RelativeHumidity+"%");
+        }
+        else{
+            fl.setText("未知");
+            hum.setText("未知");
         }
         String suggestion_comfort="舒适指数\n"+weather.suggestion.comfort.briefInfo;
         String suggestion_carWash="洗车指数\n"+weather.suggestion.carWash.briefInfo;

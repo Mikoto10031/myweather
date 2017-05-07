@@ -18,6 +18,10 @@ public class Now {
     public More more;
     @SerializedName("fl")
     public String sensibleTemp;
+    @SerializedName("hum")
+    public String RelativeHumidity;
+    @SerializedName("pres")
+    public String airpres;
     public class More{
         @SerializedName("txt")
         public String info;
