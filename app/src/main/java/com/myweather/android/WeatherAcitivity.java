@@ -10,6 +10,8 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,11 +25,16 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.myweather.android.gson.Forecast;
 import com.myweather.android.gson.HourlyForecast;
+import com.myweather.android.gson.News;
+import com.myweather.android.gson.NewsAdapter;
+import com.myweather.android.gson.NewsList;
 import com.myweather.android.gson.Weather;
 import com.myweather.android.util.HttpUtil;
 import com.myweather.android.util.Utility;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -49,6 +56,7 @@ public class WeatherAcitivity extends AppCompatActivity implements View.OnClickL
 
     private String Key="fc99c25bcb6b448cab14ce39790e84b0";
     private String OtherKey="bc0418b57b2d4918819d3974ac1285d9";
+    private List<News> newslist=new ArrayList<>();
     private Weather infoweather;
     public DrawerLayout drawerLayout;
     public Button choose_county;
@@ -71,6 +79,7 @@ public class WeatherAcitivity extends AppCompatActivity implements View.OnClickL
     private Button suggestionLayer;
     private Button suggestionFlu;
     private Button suggestionClothes;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +96,7 @@ public class WeatherAcitivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_weather);
         /**
          * 控件初始化,求求你了，给我的肝放个假吧！
-         * 吔shi了
+         * 吔shi啦
          */
         drawerLayout=(DrawerLayout) findViewById(R.id.drawerLayout);
         choose_county=(Button)findViewById(R.id.choose_county);
@@ -129,6 +138,7 @@ public class WeatherAcitivity extends AppCompatActivity implements View.OnClickL
              */
         showWeather(weather);
         }
+
         /**
          * 本地 SharedPreferences为空时，通过传来的weatherId来请求天气数据
          */
@@ -140,10 +150,24 @@ public class WeatherAcitivity extends AppCompatActivity implements View.OnClickL
             weatherLayout.setVisibility(View.INVISIBLE);
             requestWeatherFromApi(weatherId);
         }
+        /**
+         * 启动时优先查询本地JSON，显示新闻，然后才请求新闻数据
+         */
+        SharedPreferences preferences_news= PreferenceManager.getDefaultSharedPreferences(this);
+        String newsJsonString = preferences_news.getString("news",null);
+        if(newsJsonString!=null){
+            NewsList newsList=Utility.handleNewsResponse(newsJsonString);
+            Log.d("本地缓存",newsJsonString);
+            showNews(newsList);
+        }
+        else {
+            requestNewsFromApi();
+        }
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 requestWeatherFromApi(weatherId);
+                requestNewsFromApi();
             }
         });
         /**
@@ -377,7 +401,69 @@ public class WeatherAcitivity extends AppCompatActivity implements View.OnClickL
         /**
          * 计划功能：
          * 1.显示了天气后启动后台服务，隔一段时间更新一次天气
-         * 2.增加每日新闻
+         * 2.增加每日新闻（ing）
          */
+    }
+    /**
+     * 网上查询新闻保存到本地并显示新闻
+     */
+    public void requestNewsFromApi(){
+        String Url="http://api.avatardata.cn/ActNews/Query?key=d493ecf57e694decb2876b5e6a74e210&keyword=中国";
+        HttpUtil.sendOkHttpRequest(Url, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(WeatherAcitivity.this, "找不到大新闻", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String newsReponseData=response.body().string();
+                Log.d("WeatherNews",newsReponseData);
+                /**
+                 * 解析新闻Json，返回NewList实例
+                 */
+                final NewsList newList=Utility.handleNewsResponse(newsReponseData);
+               /* if(newList!=null&&newList.error_code.equals("0")){
+                    for(News news:newList.NewsList){
+                        Log.d("WeatherAcitivity",news.title);
+                        Log.d("WeatherAcitivity",news.imgage);
+                        Log.d("WeatherAcitivity",news.url);
+                    }
+                }*/
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(newList!=null&&newList.error_code.equals("0")){
+                            /**
+                             * 保存新闻的Json
+                             */
+                            SharedPreferences.Editor editor=PreferenceManager.getDefaultSharedPreferences(WeatherAcitivity.this).edit();
+                            editor.putString("news",newsReponseData);
+                            editor.apply();
+                            showNews(newList);
+                        }
+                        else {
+                            Toast.makeText(WeatherAcitivity.this, "找不到大新闻", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        });
+    }
+    /**
+     * 显示新闻，为RecyclerView设置适配器
+     */
+    public void showNews(NewsList newsList){
+        newslist=newsList.NewsList;
+        RecyclerView recyclerview=(RecyclerView) findViewById(R.id.news);
+        LinearLayoutManager layoutmanager=new LinearLayoutManager(this);
+        recyclerview.setLayoutManager(layoutmanager);
+        NewsAdapter adapter=new NewsAdapter(newslist);
+        recyclerview.setAdapter(adapter );
     }
 }

@@ -162,7 +162,7 @@ public class ChooseAreaFragment extends Fragment {
      * 点击手机的返回键时，也要实现返回按钮的功能(功能未完善)
      */
     /**
-     * 查询省份，本地数据库查询→api查询
+     * 查询省份，本地数据库查询→api查询adb shell
      */
     private void queryProvince(){
         titleText.setText("中国");

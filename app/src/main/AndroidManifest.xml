@@ -23,6 +23,7 @@
             android:name=".SuggetionAll"
             android:label="@string/title_activity_suggetion_all"
             android:theme="@style/AppTheme" />
+        <activity android:name=".News_WebView"></activity>
     </application>
 
 </manifest>

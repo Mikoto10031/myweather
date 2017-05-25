@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.myweather.android.db.City;
 import com.myweather.android.db.County;
 import com.myweather.android.db.Province;
+import com.myweather.android.gson.NewsList;
 import com.myweather.android.gson.Weather;
 
 import org.json.JSONArray;
@@ -99,6 +100,22 @@ public class Utility {
             weather=new Gson().fromJson(weatherContent,Weather.class);
             return weather;
         }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * yong Gson解析新闻数据，以NewsList类的形式返回
+     * @param response
+     * @return
+     */
+    public static NewsList handleNewsResponse(String response) {
+        try {
+            Gson gson = new Gson();
+            NewsList newsList = gson.fromJson(response, NewsList.class);
+            return newsList;
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
